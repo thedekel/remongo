@@ -16,11 +16,14 @@
   "keywords": [
     "mongo",
     "redundant",
-    "db",
-    ""
+    "db"
   ],
   "author": "Yuval Dekel",
   "license": "BSD",
   "readmeFilename": "Readme.md",
-  "gitHead": "e5274a60da6f3516e61f008b74868c8b011be69b"
+  "gitHead": "e5274a60da6f3516e61f008b74868c8b011be69b",
+  "devDependencies": {
+    "mocha": "",
+    "should": ""
+  }
 }

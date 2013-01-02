@@ -1,0 +1,26 @@
+{
+  "name": "remongo",
+  "version": "0.0.1",
+  "description": "experimental mongo access layer centered around redundant data",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/thedekel/remongo.git"
+  },
+  "keywords": [
+    "mongo",
+    "redundant",
+    "db",
+    ""
+  ],
+  "author": "Yuval Dekel",
+  "license": "BSD",
+  "readmeFilename": "Readme.md",
+  "gitHead": "e5274a60da6f3516e61f008b74868c8b011be69b"
+}

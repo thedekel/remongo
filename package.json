@@ -1,6 +1,6 @@
 {
   "name": "remongo",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "experimental mongo access layer centered around redundant data",
   "main": "index.js",
   "directories": {
@@ -18,6 +18,9 @@
     "redundant",
     "db"
   ],
+  "dependencies": {
+    "mongolian":"0.x"
+  },
   "author": "Yuval Dekel",
   "license": "BSD",
   "readmeFilename": "Readme.md",

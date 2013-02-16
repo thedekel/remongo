@@ -1,6 +1,6 @@
 {
   "name": "remongo",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "experimental mongo access layer centered around redundant data",
   "main": "index.js",
   "directories": {

@@ -1,7 +1,7 @@
 var assert = require('assert'),
     Remongo = require('./../index');
 
-suite('remongo', function(){
+suite('remongo:', function(){
   test('new models can be created', function(){
     var remongo = new Remongo("test_db");
     var userScheme = remongo.createScheme();
@@ -18,28 +18,38 @@ suite('remongo', function(){
     });
     userScheme.save("User");
     assert.ok(remongo.models.User);
-    var testInstance = new remongo.models.User({name: "test", password:"123456", events:[new remongo.models.Event({})]});
+    var testInstance = new remongo.models.User({name: "test", password:"123456"});
     assert.ok(testInstance.save);
     assert.ok(testInstance.remove);
     assert.ok(testInstance.values);
-    console.log(testInstance.values);
   });
 
-  test("models can't be created with missing fields", function(){
+  test("models can be created with missing fields", function(){
     var remongo = new Remongo("test_db");
     var userScheme = remongo.createScheme()
       .publics({
         name: String,
-        email: "EmailObject"
+        email: String
       })
       .privates({
         password: String
       });
     userScheme.save("User");
-  userScheme.save("User");
-  assert.throws(function(){
-    var testInstance = new remongo.models.User({name: "test", password:"123456"});
+    assert.doesNotThrow(function(){
+      var testInstance = new remongo.models.User({name: "test", password:"123456"}); 
+    });
   });
+
+  test("type checking on new instances of models", function(){
+    var remongo = new Remongo("test_db");
+    var userScheme = remongo.createScheme()
+      .publics({
+        name: String,
+      });
+    userScheme.save("User");
+    assert.throws(function(){
+      var testInstance = new remongo.models.User({name: 123});
+    });
   });
 });
  

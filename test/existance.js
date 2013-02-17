@@ -1,7 +1,7 @@
 var assert = require('assert'),
     Remongo = require('./../index');
 
-suite('remongo', function(){
+suite('existence: ', function(){
   test('remongo library file exists', function(){
     assert.ok(Remongo);
   });

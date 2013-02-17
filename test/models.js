@@ -1,7 +1,7 @@
 var assert = require('assert'),
     Remongo = require('./../index');
 
-suite('remongo:', function(){
+suite('models: ', function(){
   test('new models can be created', function(){
     var remongo = new Remongo("test_db");
     var userScheme = remongo.createScheme();
@@ -50,6 +50,21 @@ suite('remongo:', function(){
     assert.throws(function(){
       var testInstance = new remongo.models.User({name: 123});
     });
+  });
+
+  test("models are added to lookup table", function(){
+    var remongo = new Remongo("test_db");
+    var userScheme = remongo.createScheme()
+      .publics({
+        name: String,
+      });
+    userScheme.save("User");
+    assert.ok(remongo.lookups["User"]);
+    assert.ok(remongo.lookups["User"]["User"]);
+    assert.strictEqual(remongo.lookups["User"]["User"], true);
+  });
+
+  test("derives are added to lookup table", function(){
   });
 });
  

@@ -65,6 +65,33 @@ suite('models: ', function(){
   });
 
   test("derives are added to lookup table", function(){
+    var remongo = new Remongo("test_db");
+    var userScheme = remongo.createScheme();
+    var eventScheme = remongo.createScheme();
+    eventScheme.save("Event");
+    userScheme.publics({
+      name: String
+    });
+    userScheme.privates({
+      password: String
+    });
+    userScheme.derives({
+      events: ["Event"]
+    });
+    userScheme.save("User");
+  });
+
+  test("instances can be saved to db once created", function(){
+  });
+
+
+  test("instances of a model can be queried from db by ID", function(){
+  });
+
+  test("instances can be removed from db", function(){
+  });
+
+  test("instances can be embedded in other instances if type is correct", function(){
   });
 });
  

@@ -81,9 +81,27 @@ suite('models: ', function(){
     userScheme.save("User");
   });
 
-  test("instances can be saved to db once created", function(){
+  test("simple instances can be saved to db once created", function(){
+    var remongo = new Remongo("test_db");
+    var userScheme = remongo.createScheme();
+    userScheme.publics({
+      name: String,
+      email: String
+    });
+    userScheme.privates({
+      password: String
+    });
+    userScheme.save("User");
+
+    assert.doesNotThrow(function(){
+      var jarvis = new remongo.models.User({name:"Jarvis", 
+        email:"magicjarvis@gmail.com", password: "iamtomer"});
+      jarvis.save();
+    });
   });
 
+  test("complex instances can be saved to db once created", function(){
+  });
 
   test("instances of a model can be queried from db by ID", function(){
   });

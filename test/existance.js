@@ -9,6 +9,8 @@ suite('existence: ', function(){
     var remongo = new Remongo("test_db", "localhost", 27017);
     assert.ok(remongo.db);
     assert.ok(remongo.test_colls);
-    assert.ok(remongo.test_colls());
+    assert.doesNotThrow(function(){
+      remongo.test_colls();
+    });
   });
 });

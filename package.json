@@ -19,7 +19,7 @@
     "db"
   ],
   "dependencies": {
-    "mongolian":"0.x"
+    "mongodb-wrapper":"x"
   },
   "author": "Yuval Dekel",
   "license": "BSD",

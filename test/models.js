@@ -3,7 +3,7 @@ var assert = require('assert'),
 
 suite('models: ', function(){
   test('new models can be created', function(){
-    var remongo = new Remongo("test_db");
+    var remongo = new Remongo("test_db1");
     var userScheme = remongo.createScheme();
     var eventScheme = remongo.createScheme();
     eventScheme.save("Event");
@@ -25,7 +25,7 @@ suite('models: ', function(){
   });
 
   test("models can be created with missing fields", function(){
-    var remongo = new Remongo("test_db");
+    var remongo = new Remongo("test_db2");
     var userScheme = remongo.createScheme()
       .publics({
         name: String,
@@ -41,7 +41,7 @@ suite('models: ', function(){
   });
 
   test("type checking on new instances of models", function(){
-    var remongo = new Remongo("test_db");
+    var remongo = new Remongo("test_db3");
     var userScheme = remongo.createScheme()
       .publics({
         name: String,
@@ -53,7 +53,7 @@ suite('models: ', function(){
   });
 
   test("models are added to lookup table", function(){
-    var remongo = new Remongo("test_db");
+    var remongo = new Remongo("test_db4");
     var userScheme = remongo.createScheme()
       .publics({
         name: String,
@@ -65,7 +65,7 @@ suite('models: ', function(){
   });
 
   test("derives are added to lookup table", function(){
-    var remongo = new Remongo("test_db");
+    var remongo = new Remongo("test_db5");
     var userScheme = remongo.createScheme();
     var eventScheme = remongo.createScheme();
     eventScheme.save("Event");
@@ -82,7 +82,7 @@ suite('models: ', function(){
   });
 
   test("simple instances can be saved to db once created", function(){
-    var remongo = new Remongo("test_db");
+    var remongo = new Remongo("test_db6");
     var userScheme = remongo.createScheme();
     userScheme.publics({
       name: String,
@@ -96,7 +96,9 @@ suite('models: ', function(){
     assert.doesNotThrow(function(){
       var jarvis = new remongo.models.User({name:"Jarvis", 
         email:"magicjarvis@gmail.com", password: "iamtomer"});
-      jarvis.save();
+      jarvis.save(function(err, doc){
+        console.log('err', err, 'doc', doc);
+      });
     });
   });
 

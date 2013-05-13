@@ -4,19 +4,19 @@ var assert = require('assert'),
 suite('models: ', function(){
   test('new models can be created', function(){
     var remongo = new Remongo("test_db1");
-    var userScheme = remongo.createScheme();
-    var eventScheme = remongo.createScheme();
-    eventScheme.save("Event");
-    userScheme.publics({
+    var userSchema = remongo.createSchema();
+    var eventSchema = remongo.createSchema();
+    eventSchema.save("Event");
+    userSchema.publics({
       name: String
     });
-    userScheme.privates({
+    userSchema.privates({
       password: String
     });
-    userScheme.derives({
+    userSchema.derives({
       events: ["Event"]
     });
-    userScheme.save("User");
+    userSchema.save("User");
     assert.ok(remongo.models.User);
     var testInstance = new remongo.models.User({name: "test", password:"123456"});
     assert.ok(testInstance.save);
@@ -26,7 +26,7 @@ suite('models: ', function(){
 
   test("models can be created with missing fields", function(){
     var remongo = new Remongo("test_db2");
-    var userScheme = remongo.createScheme()
+    var userSchema = remongo.createSchema()
       .publics({
         name: String,
         email: String
@@ -34,7 +34,7 @@ suite('models: ', function(){
       .privates({
         password: String
       });
-    userScheme.save("User");
+    userSchema.save("User");
     assert.doesNotThrow(function(){
       var testInstance = new remongo.models.User({name: "test", password:"123456"}); 
     });
@@ -42,11 +42,11 @@ suite('models: ', function(){
 
   test("type checking on new instances of models", function(){
     var remongo = new Remongo("test_db3");
-    var userScheme = remongo.createScheme()
+    var userSchema = remongo.createSchema()
       .publics({
         name: String,
       });
-    userScheme.save("User");
+    userSchema.save("User");
     assert.throws(function(){
       var testInstance = new remongo.models.User({name: 123});
     });
@@ -54,11 +54,11 @@ suite('models: ', function(){
 
   test("models are added to lookup table", function(){
     var remongo = new Remongo("test_db4");
-    var userScheme = remongo.createScheme()
+    var userSchema = remongo.createSchema()
       .publics({
         name: String,
       });
-    userScheme.save("User");
+    userSchema.save("User");
     assert.ok(remongo.lookups["User"]);
     assert.ok(remongo.lookups["User"]["User"]);
     assert.strictEqual(remongo.lookups["User"]["User"], true);
@@ -66,32 +66,32 @@ suite('models: ', function(){
 
   test("derives are added to lookup table", function(){
     var remongo = new Remongo("test_db5");
-    var userScheme = remongo.createScheme();
-    var eventScheme = remongo.createScheme();
-    eventScheme.save("Event");
-    userScheme.publics({
+    var userSchema = remongo.createSchema();
+    var eventSchema = remongo.createSchema();
+    eventSchema.save("Event");
+    userSchema.publics({
       name: String
     });
-    userScheme.privates({
+    userSchema.privates({
       password: String
     });
-    userScheme.derives({
+    userSchema.derives({
       events: ["Event"]
     });
-    userScheme.save("User");
+    userSchema.save("User");
   });
 
   test("simple instances can be saved to db once created", function(){
     var remongo = new Remongo("test_db6");
-    var userScheme = remongo.createScheme();
-    userScheme.publics({
+    var userSchema = remongo.createSchema();
+    userSchema.publics({
       name: String,
       email: String
     });
-    userScheme.privates({
+    userSchema.privates({
       password: String
     });
-    userScheme.save("User");
+    userSchema.save("User");
 
     assert.doesNotThrow(function(){
       var jarvis = new remongo.models.User({name:"Jarvis", 

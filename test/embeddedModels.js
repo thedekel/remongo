@@ -1,5 +1,4 @@
-var assert = require('assert'),
-    Remongo = require('./../index');
+var Remongo = require('./../index');
 
 //User and Posts
 var remongo = new Remongo('simple_db');
@@ -27,8 +26,6 @@ postS.embeds({
 postS.save("Post");
 userS.save("User");
 
-suite("Embedded Models", function(){
-  test("for real man", function(){
-    assert.equal(2, 1+1);
-  });
-});
+exports["for real man"] = function(be, assert){
+  assert.equal(2, 1+1);
+};

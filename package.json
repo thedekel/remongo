@@ -26,7 +26,7 @@
   "readmeFilename": "Readme.md",
   "gitHead": "e5274a60da6f3516e61f008b74868c8b011be69b",
   "devDependencies": {
-    "mocha": "",
+    "expresso": "",
     "should": ""
   }
 }

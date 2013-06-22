@@ -14,6 +14,12 @@ simpleUserS.privates({
 
 simpleUserS.save("User");
 
+exports['new models appear on luukup'] = function(be, assert) {
+  assert.ok(remongo.lookups["User"]);
+  assert.ok(remongo.lookups["User"]["User"]);
+  assert.eql(remongo.lookups["User"]["User"], true);
+};
+
 exports['instantiating simple objects'] = function(be, assert) {
   assert.doesNotThrow(function() {
     var simpleInstance = new remongo.models.User(
@@ -59,7 +65,10 @@ exports['save simple user to db'] = function(be, assert){
     assert.equal(simpleInstance.values.email, "test@user4.com");
     assert.equal(simpleInstance.values.pass, "lolpass");
     simpleInstance.save(function(err, doc){
-      assert.ok(doc[0]._id);
+      if (err) {
+        assert.fail(err, null);
+      }
+      assert.ok(doc.values._id);
     });
   });
 };

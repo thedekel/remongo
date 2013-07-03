@@ -1,6 +1,7 @@
 var Remongo = require('./../index');
 
 //init simple schema
+var util = require('util');
 var remongo = new Remongo('simple_db');
 var simpleUserS = remongo.createSchema();
 
@@ -14,10 +15,8 @@ simpleUserS.privates({
 
 simpleUserS.save("User");
 
-exports['new models appear on luukup'] = function(be, assert) {
+exports['new models appear on lookup'] = function(be, assert) {
   assert.ok(remongo.lookups["User"]);
-  assert.ok(remongo.lookups["User"]["User"]);
-  assert.eql(remongo.lookups["User"]["User"], true);
 };
 
 exports['instantiating simple objects'] = function(be, assert) {
@@ -73,12 +72,6 @@ exports['save simple user to db'] = function(be, assert){
   });
 };
 
-exports['simple users are added to lookup table'] = function(be, assert){
-  assert.ok(remongo.lookups['User']);
-  assert.ok(remongo.lookups['User']['User']);
-  assert.strictEqual(remongo.lookups['User']['User'], true);
-};
-
 exports['query simple instance by id'] = function(be, assert) {
   var simpleInstance = new remongo.models.User(
       {
@@ -121,6 +114,22 @@ exports['simple instances can be removed from db'] = function(be, assert) {
           assert.isNull(instance2);
         });
       });
+    });
+  });
+};
+
+
+exports['update public and private fields'] = function(be, assert) {
+  var simpleInstance = new remongo.models.User(
+      {
+        name: "testUser7",
+        email: "test@user7.com",
+        pass: "password"
+      });
+  simpleInstance.save(function(err, doc) {
+    if (err) assert.fail(err);
+    remongo.models.User.findById(doc.values._id, function(err, instance) {
+      instance.update({name: "testUser7Edited", pass:"drowssap"});
     });
   });
 };

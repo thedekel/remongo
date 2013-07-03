@@ -30,16 +30,12 @@ exports['embeds added to lookup table'] = function(be, assert) {
   // means that User is a registered model with remongo
   assert.ok(remongo.lookups['User']);
   // means that remongo expects the "User" collection to hold User objects
-  assert.ok(remongo.lookups['User']['User']);
-  assert.eql(remongo.lookups['User']['User'], true);
   // means that remongo expects Post.author to contain users
   assert.ok(remongo.lookups['User']['Post.author']);
   assert.eql(remongo.lookups['User']['Post.author'], true);
   // menas that Post is a registered model with remongo
   assert.ok(remongo.lookups['Post']);
   // means that remongo expects the "Post" collection to hold Post objects
-  assert.ok(remongo.lookups['Post']['Post']);
-  assert.eql(remongo.lookups['Post']['Post'], true);
   // means that remongo expects Post.author to contain users
   assert.ok(remongo.lookups['Post']['User.posts']);
   assert.eql(remongo.lookups['Post']['User.posts'], true);

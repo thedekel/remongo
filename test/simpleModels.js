@@ -129,7 +129,13 @@ exports['update public and private fields'] = function(be, assert) {
   simpleInstance.save(function(err, doc) {
     if (err) assert.fail(err);
     remongo.models.User.findById(doc.values._id, function(err, instance) {
-      instance.update({name: "testUser7Edited", pass:"drowssap"});
+      instance.update({name: "testUser7Edited", pass:"drowssap"}, 
+        function(err, updated_instance) {
+          assert.eql(updated_instance.values.name, "testUser7Edited");
+          assert.eql(updated_instance.values.pass, "drowssap");
+          updated_instance.save();
+        }
+      );
     });
   });
 };

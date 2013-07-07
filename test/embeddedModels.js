@@ -41,7 +41,7 @@ exports['embeds added to lookup table'] = function(be, assert) {
   assert.eql(remongo.lookups['Post']['User.posts'], true);
 };
 
-exports['saveAndModify'] = function(be, assert) {
+exports['modify after saving an object'] = function(be, assert) {
   var jarvis = new remongo.models.User({
     name: "Jarvis",
     email: "magicjarvis@gmail.com",
@@ -61,4 +61,35 @@ exports['saveAndModify'] = function(be, assert) {
       });
     });
   });
+};
+
+exports['propogate modifications'] = function(be, assert) {
+  var jarfish = new remongo.models.User({
+    name: "Jarfish Johanson",
+    email: "jarfish.john@gmail.com",
+    pass: "iamtomertoo"
+  });
+  var firstPost = new remongo.models.Post({
+    content: "I ate a pie today"
+  });
+  jarfish.save(function(err, doc){
+    firstPost.embed("author", doc);
+    firstPost.save(function(err, postDoc){
+      if (err) {
+        assert.fail(err, null);
+      }
+      jarfish.embed("posts", postDoc).save(function(err, doc) {
+        jarfish.update({name: "The Jarfish Johanson"}, function(err, doc2) {
+          jarfish.save(function(err, doc3) {
+            remongo.models.Post.findById(firstPost.values._id, 
+              function(err, instance) {
+                assert.eql(instance.values.author.name, "The Jarfish Johanson");
+              }
+            );
+          });
+        });
+      });
+    });
+  });
+
 };

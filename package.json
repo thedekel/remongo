@@ -19,7 +19,8 @@
     "db"
   ],
   "dependencies": {
-    "mongodb-wrapper":"x"
+    "mongodb-wrapper":"x",
+    "async": "*"
   },
   "author": "Yuval Dekel",
   "license": "BSD",

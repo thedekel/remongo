@@ -16,7 +16,7 @@ simpleUserS.privates({
 simpleUserS.save("User");
 
 exports['new models appear on lookup'] = function(be, assert) {
-  assert.ok(remongo.lookups["User"]);
+  assert.ok(remongo.lookups.User);
 };
 
 exports['instantiating simple objects'] = function(be, assert) {
@@ -37,7 +37,7 @@ exports['instantiating with missing field'] = function(be, assert){
   assert.doesNotThrow(function(){
     var simpleInstance = new remongo.models.User(
       {
-        name: "testUser2",
+        name: "testUser2"
       });
     assert.equal(simpleInstance.values.name, "testUser2");
     assert.equal(simpleInstance.values.email, "");
@@ -137,5 +137,49 @@ exports['update public and private fields'] = function(be, assert) {
         }
       );
     });
+  });
+};
+
+exports['search by field value'] = function(be, assert) {
+  var simpleInstance1 = new remongo.models.User(
+      {
+        name: 'non-unique-name',
+        email: 'test@user8.com',
+        pass: 'password'
+      });
+  var simpleInstance2 = new remongo.models.User(
+      {
+        name: 'non-unique-name',
+        email: 'test@user9.com',
+        pass: 'password'
+      });
+  simpleInstance1.save(function(err, doc) {
+    simpleInstance2.save(function(err2, doc2) {
+      if (err || err2) return assert.fail(err, err2);
+      remongo.models.User.searchByField('name', 'non-unique-name', [], 
+        function(err3, docsArr) {
+          assert.notEqual(0,docsArr.length);
+          assert.eql(docsArr[0].values.name, 'non-unique-name');
+        }
+      );
+    });
+  });
+};
+
+exports['custom search'] = function(be, assert) {
+  var simpleInstance1 = new remongo.models.User(
+      {
+        name: 'testUser10',
+        email: 'test@user10.com',
+        pass: 'password'
+      });
+  simpleInstance1.save(function(err, doc) {
+    if (err) return assert.fail(err);
+    remongo.models.User.customSearch({email: 'test@user10.com'}, [], 
+      function(err3, docsArr) {
+        assert.notEqual(0,docsArr.length);
+        assert.eql(docsArr[0].values.email, 'test@user10.com');
+      }
+    );
   });
 };

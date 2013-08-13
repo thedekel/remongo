@@ -1,10 +1,14 @@
 {
   "name": "remongo",
   "version": "0.0.4",
+  "engines": {
+    "node": "0.10"
+  },
   "description": "experimental mongo access layer centered around redundant data",
   "main": "index.js",
   "directories": {
-    "test": "test"
+    "test": "test",
+    "lib": "lib"
   },
   "scripts": {
     "test": "./node_modules/expresso/bin/expresso"

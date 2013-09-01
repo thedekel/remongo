@@ -28,17 +28,16 @@ userS.save("User");
 
 exports['embeds added to lookup table'] = function(be, assert) {
   // means that User is a registered model with remongo
-  assert.ok(remongo.lookups['User']);
-  // means that remongo expects the "User" collection to hold User objects
-  // means that remongo expects Post.author to contain users
-  assert.ok(remongo.lookups['User']['Post.author']);
-  assert.eql(remongo.lookups['User']['Post.author'], true);
-  // menas that Post is a registered model with remongo
-  assert.ok(remongo.lookups['Post']);
-  // means that remongo expects the "Post" collection to hold Post objects
-  // means that remongo expects Post.author to contain users
-  assert.ok(remongo.lookups['Post']['User.posts']);
-  assert.eql(remongo.lookups['Post']['User.posts'], true);
+  assert.ok(remongo.lookups.User);
+
+  var postAuth = remongo.lookups.User.some(function(item) {
+    return (item.model == "Post" && item.field == "author");
+  });
+  assert.eql(postAuth, true);
+  var userPost = remongo.lookups.User.some(function(item) {
+    return (item.model == "User" && item.field === null);
+  });
+  assert.eql(userPost, true);
 };
 
 exports['modify after saving an object'] = function(be, assert) {
